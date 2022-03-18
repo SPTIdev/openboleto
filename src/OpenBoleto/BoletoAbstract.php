@@ -49,7 +49,7 @@ abstract class BoletoAbstract
      * @var array Nome espécie das moedas
      */
     protected static $especie = array(
-        self::MOEDA_REAL => 'REAL'
+        self::MOEDA_REAL => 'R$'
     );
 
     /**
@@ -226,12 +226,40 @@ abstract class BoletoAbstract
      * @var Agente
      */
     protected $cedente;
-    
+
     /**
      * Entidade sacada (de quem se cobra o boleto)
      * @var Agente
      */
     protected $sacado;
+
+    /**
+     * Entidade faturamento1 (Informações linha 1 sobre dados do faturamento)
+     * @var AgenteFaturamento
+     */
+    protected $faturamento1;
+    /**
+     * Entidade faturamento2 (Informações linha 2 sobre dados do faturamento)
+     * @var AgenteFaturamento
+     */
+    protected $faturamento2;
+    /**
+     * Entidade faturamento3 (Informações linha 3 sobre dados do faturamento)
+     * @var AgenteFaturamento
+     */
+    protected $faturamento3;
+
+    /**
+     * Entidade prePagamento1 (Informações linha 1 sobre o valor do boleto)
+     * @var AgentePrePagamento
+     */
+    protected $prePagamento1;
+
+    /**
+     * Entidade prePagamento2 (Informações da linha 2 sobre o valor do boleto)
+     * @var AgentePrePagamento
+     */
+    protected $prePagamento2;
 
     /**
      * Entidade sacador avalista
@@ -258,6 +286,12 @@ abstract class BoletoAbstract
     protected $instrucoes = array('Pagar até a data do vencimento.');
 
     /**
+     * Array com as linhas de instruções
+     * @var array
+     */
+    protected $instrucoes2 = array('Pagar até a data do vencimento.');
+
+    /**
      * Nome do arquivo de template a ser usado
      * @var string
      */
@@ -280,11 +314,23 @@ abstract class BoletoAbstract
      * @var string
      */
     protected $logoBanco;
-    
+
     /**
-    * Array que sera exportada pelo metodo getData
-    * @var array
-    */
+     * Localização do logotipo da ANS, referente ao diretório de imagens
+     * @var string
+     */
+    protected $logoAns = 'ans.jpg';
+
+    /**
+     * Localização do logotipo da empresa, referente ao diretório de imagens
+     * @var string
+     */
+    protected $logoEmpresa = 'logo-empresa.jpg';
+
+    /**
+     * Array que sera exportada pelo metodo getData
+     * @var array
+     */
     protected $data;
 
     /**
@@ -292,8 +338,8 @@ abstract class BoletoAbstract
      * @var array
      */
     protected $imprimeInstrucoesImpressao = true;
-    
-    
+
+
     /**
      * Construtor
      *
@@ -301,8 +347,7 @@ abstract class BoletoAbstract
      */
     public function  __construct($params = array())
     {
-        foreach ($params as $param => $value)
-        {
+        foreach ($params as $param => $value) {
             if (method_exists($this, 'set' . $param)) {
                 $this->{'set' . $param}($value);
             }
@@ -609,7 +654,7 @@ abstract class BoletoAbstract
         $this->numeroDocumento = $numeroDocumento;
         return $this;
     }
-    
+
     /**
      * Define o Número da parcela
      *
@@ -720,6 +765,27 @@ abstract class BoletoAbstract
     {
         return $this->instrucoes;
     }
+    /**
+     * Define um array com instruções (máximo 8) para pagamento
+     *
+     * @param array $instrucoes2
+     * @return BoletoAbstract
+     */
+    public function setInstrucoes2($instrucoes2)
+    {
+        $this->instrucoes2 = $instrucoes2;
+        return $this;
+    }
+
+    /**
+     * Retorna um array com instruções (máximo 8) para pagamento
+     *
+     * @return array
+     */
+    public function getInstrucoes2()
+    {
+        return $this->instrucoes2;
+    }
 
     /**
      * Define um array com a descrição do demonstrativo (máximo 5)
@@ -807,6 +873,116 @@ abstract class BoletoAbstract
     public function getSacado()
     {
         return $this->sacado;
+    }
+
+    /**
+     * Define o objeto do faturamento1
+     *
+     * @param AgenteFaturamento $faturamento1
+     * @return BoletoAbstract
+     */
+    public function setFaturamento1(AgenteFaturamento $faturamento1)
+    {
+        $this->faturamento1 = $faturamento1;
+        return $this;
+    }
+
+    /**
+     * Retorna o objeto do faturamento1
+     *
+     * @return AgenteFaturamento
+     */
+    public function getFaturamento1()
+    {
+        return $this->faturamento1;
+    }
+
+    /**
+     * Define o objeto do faturamento2
+     *
+     * @param AgenteFaturamento $faturamento2
+     * @return BoletoAbstract
+     */
+    public function setFaturamento2(AgenteFaturamento $faturamento2)
+    {
+        $this->faturamento2 = $faturamento2;
+        return $this;
+    }
+
+    /**
+     * Retorna o objeto do faturamento2
+     *
+     * @return AgenteFaturamento
+     */
+    public function getFaturamento2()
+    {
+        return $this->faturamento2;
+    }
+
+    /**
+     * Define o objeto do faturamento3
+     *
+     * @param AgenteFaturamento $faturamento3
+     * @return BoletoAbstract
+     */
+    public function setFaturamento3(AgenteFaturamento $faturamento3)
+    {
+        $this->faturamento3 = $faturamento3;
+        return $this;
+    }
+
+    /**
+     * Retorna o objeto do faturamento3
+     *
+     * @return AgenteFaturamento
+     */
+    public function getFaturamento3()
+    {
+        return $this->faturamento3;
+    }
+
+    /**
+     * Define o objeto do prePagamento1
+     *
+     * @param AgentePrePagamento $prePagamento1
+     * @return BoletoAbstract
+     */
+    public function setPrePagamento1(AgentePrePagamento $prePagamento1)
+    {
+        $this->prePagamento1 = $prePagamento1;
+        return $this;
+    }
+
+    /**
+     * Retorna o objeto do prePagamento1
+     *
+     * @return AgentePrePagamento
+     */
+    public function getPrePagamento1()
+    {
+        return $this->prePagamento1;
+    }
+
+    /**
+     * Define o objeto do prePagamento2
+     *
+     * @param AgentePrePagamento $prePagamento2
+     * @return BoletoAbstract
+     */
+    public function setPrePagamento2(AgentePrePagamento $prePagamento2)
+    {
+        $this->prePagamento2 = $prePagamento2;
+        return $this;
+    }
+
+    /**
+     * Retorna o objeto do prePagamento2
+     *
+     * @return AgentePrePagamento
+     */
+    public function getPrePagamento2()
+    {
+        return $this->prePagamento2;
     }
 
     /**
@@ -1074,7 +1250,7 @@ abstract class BoletoAbstract
     {
         return $this->resourcePath;
     }
-    
+
     /**
      * Define se imprime ou não as instruções de impressão
      *
@@ -1086,7 +1262,7 @@ abstract class BoletoAbstract
         $this->imprimeInstrucoesImpressao = $imprimeInstrucoesImpressao;
         return $this;
     }
-    
+
     /**
      * Retorna se imprime ou não as instruções de impressão
      *
@@ -1130,7 +1306,83 @@ abstract class BoletoAbstract
 
         $logoData or $logoData = 'data:image/' . pathinfo($this->getLogoBanco(), PATHINFO_EXTENSION) .
             ';base64,' . base64_encode(file_get_contents($this->getResourcePath() .
-            '/images/' . $this->getLogoBanco()));
+                '/images/' . $this->getLogoBanco()));
+
+        return $logoData;
+    }
+
+    /**
+     * Define a localização do logotipo da ANS relativo à pasta de imagens
+     *
+     * @param string $logoAns
+     * @return BoletoAbstract
+     */
+    public function setLogoAns($logoAns)
+    {
+        $this->logoAns = $logoAns;
+        return $this;
+    }
+
+    /**
+     * Retorna a localização do logotipo da ANS relativo à pasta de imagens
+     *
+     * @return string
+     */
+    public function getLogoAns()
+    {
+        return $this->logoAns;
+    }
+
+    /**
+     * Retorna o logotipo do banco em Base64, pronto para ser inserido na página
+     *
+     * @return string
+     */
+    public function getLogoAnsBase64()
+    {
+        static $logoData;
+
+        $logoData or $logoData = 'data:image/' . pathinfo($this->getLogoAns(), PATHINFO_EXTENSION) .
+            ';base64,' . base64_encode(file_get_contents($this->getResourcePath() .
+                '/images/' . $this->getLogoAns()));
+
+        return $logoData;
+    }
+
+    /**
+     * Define a localização do logotipo da empresa relativo à pasta de imagens
+     *
+     * @param string $logoEmpresa
+     * @return BoletoAbstract
+     */
+    public function setLogoEmpresa($logoEmpresa)
+    {
+        $this->logoEmpresa = $logoEmpresa;
+        return $this;
+    }
+
+    /**
+     * Retorna a localização do logotipo da ANS relativo à pasta de imagens
+     *
+     * @return string
+     */
+    public function getLogoEmpresa()
+    {
+        return $this->logoEmpresa;
+    }
+
+    /**
+     * Retorna o logotipo do banco em Base64, pronto para ser inserido na página
+     *
+     * @return string
+     */
+    public function getLogoEmpresaBase64()
+    {
+        static $logoData;
+
+        $logoData or $logoData = 'data:image/' . pathinfo($this->getLogoEmpresa(), PATHINFO_EXTENSION) .
+            ';base64,' . base64_encode(file_get_contents($this->getResourcePath() .
+                '/images/' . $this->getLogoEmpresa()));
 
         return $logoData;
     }
@@ -1245,6 +1497,8 @@ abstract class BoletoAbstract
             'cedente_endereco1' => $this->getCedente()->getEndereco(),
             'cedente_endereco2' => $this->getCedente()->getCepCidadeUf(),
             'logo_banco' => $this->getLogoBancoBase64(),
+            'logo_ans' => $this->getLogoAnsBase64(),
+            'logo_empresa' => $this->getLogoEmpresaBase64(),
             'logotipo' => $this->getLogoPath(),
             'codigo_banco_com_dv' => $this->getCodigoBancoComDv(),
             'especie' => static::$especie[$this->getMoeda()],
@@ -1261,15 +1515,52 @@ abstract class BoletoAbstract
             'valor_cobrado' => static::formataDinheiro($this->getValorCobrado()),
             'valor_unitario' => static::formataDinheiro($this->getValorUnitario()),
             'sacador_avalista' => $this->getSacadorAvalista() ? $this->getSacadorAvalista()->getNomeDocumento() : null,
+            /**
+             * Dados do Faturamento
+             */
+            'classe_faturamento1' => $this->getFaturamento1()->getClasse(),
+            'classe_faturamento2' => $this->getFaturamento2()->getClasse(),
+            'classe_faturamento3' => $this->getFaturamento3()->getClasse(),
+            'qte_faturamento1' => $this->getFaturamento1()->getQte(),
+            'qte_faturamento2' => $this->getFaturamento2()->getQte(),
+            'qte_faturamento3' => $this->getFaturamento3()->getQte(),
+            'unitario_faturamento1' => $this->getFaturamento1()->getUnitario(),
+            'unitario_faturamento2' => $this->getFaturamento2()->getUnitario(),
+            'unitario_faturamento3' => $this->getFaturamento3()->getUnitario(),
+            'total_faturamento1' => $this->getFaturamento1()->getTotal(),
+            'total_faturamento2' => $this->getFaturamento2()->getTotal(),
+            'total_faturamento3' => $this->getFaturamento3()->getTotal(),
+            /**
+             * Mensalidade - Pré Pagamento
+             */
+            'nome_pre_pagamento1' => $this->getPrePagamento1()->getNome(),
+            'nome_pre_pagamento2' => $this->getPrePagamento2()->getNome(),
+            'idade_pre_pagamento1' => $this->getPrePagamento1()->getIdade(),
+            'idade_pre_pagamento2' => $this->getPrePagamento2()->getIdade(),
+            'inicio_vigencia_pre_pagamento1' => $this->getPrePagamento1()->getInicioVigencia(),
+            'inicio_vigencia_pre_pagamento2' => $this->getPrePagamento2()->getInicioVigencia(),
+            'valor_anterior_pre_pagamento1' => $this->getPrePagamento1()->getValorAnterior(),
+            'valor_anterior_pre_pagamento2' => $this->getPrePagamento2()->getValorAnterior(),
+            'valor_mensalidade_pre_pagamento1' => $this->getPrePagamento1()->getValorMensalidade(),
+            'valor_mensalidade_pre_pagamento2' => $this->getPrePagamento2()->getValorMensalidade(),
+            'registro_ans_pre_pagamento1' => $this->getPrePagamento1()->getRegistroAns(),
+            'registro_ans_pre_pagamento2' => $this->getPrePagamento2()->getRegistroAns(),
+            'prox_reajuste_pre_pagamento1' => $this->getPrePagamento1()->getProxReajuste(),
+            'prox_reajuste_pre_pagamento2' => $this->getPrePagamento2()->getProxReajuste(),
+            'observacao_pre_pagamento1' => $this->getPrePagamento1()->getObservacao(),
+            'observacao_pre_pagamento2' => $this->getPrePagamento2()->getObservacao(),
+            //
             'sacado' => $this->getSacado()->getNome(),
             'sacado_documento' => $this->getSacado()->getDocumento(),
+            'sacado_idade' => $this->getSacado()->getIdade(),
             'sacado_endereco1' => $this->getSacado()->getEndereco(),
             'sacado_endereco2' => $this->getSacado()->getCepCidadeUf(),
             'demonstrativo' => (array) $this->getDescricaoDemonstrativo() + array(null, null, null, null, null), // Max: 5 linhas
             'instrucoes' => (array) $this->getInstrucoes() + array(null, null, null, null, null, null, null, null), // Max: 8 linhas
+            'instrucoes2' => (array) $this->getInstrucoes2() + array(null, null, null, null, null, null, null, null), // Max: 8 linhas
             'local_pagamento' => $this->getLocalPagamento(),
             'numero_documento' => $this->getNumeroDocumento(),
-            'agencia_codigo_cedente'=> $this->getAgenciaCodigoCedente(),
+            'agencia_codigo_cedente' => $this->getAgenciaCodigoCedente(),
             'nosso_numero' => $this->getNossoNumero(),
             'especie_doc' => $this->getEspecieDoc(),
             'aceite' => $this->getAceite(),
@@ -1280,15 +1571,16 @@ abstract class BoletoAbstract
             'numero_febraban' => $this->getNumeroFebraban(),
             'imprime_instrucoes_impressao' => $this->getImprimeInstrucoesImpressao()
         );
-        
-        
-        
-        $this->data = array_merge($this->data,$this->getViewVars());
-        
+
+
+
+        $this->data = array_merge($this->data, $this->getViewVars());
+
         extract($this->data);
 
         // Ignore errors inside the template
         if ($this->getLayout() != 'jasper.phtml') {
+            var_dump($this->getResourcePath() . '/views/' . $this->getLayout());
             @include $this->getResourcePath() . '/views/' . $this->getLayout();
         }
 
@@ -1304,6 +1596,7 @@ abstract class BoletoAbstract
     {
         $agencia = $this->getAgenciaDv() !== null ? $this->getAgencia() . '-' . $this->getAgenciaDv() : $this->getAgencia();
         $conta = $this->getContaDv() !== null ? $this->getConta() . '-' . $this->getContaDv() : $this->getConta();
+
         return $agencia . ' / ' . $conta;
     }
 
@@ -1371,7 +1664,7 @@ abstract class BoletoAbstract
 
         // Concatenates bankCode + currencyCode + first block of 5 characters +
         // checkDigit.
-        $part1 = $this->getCodigoBanco(). $this->getMoeda() . $blocks['20-24'] . $check_digit;
+        $part1 = $this->getCodigoBanco() . $this->getMoeda() . $blocks['20-24'] . $check_digit;
 
         // Calculates part2 check digit from 2nd block of 10 characters.
         $check_digit = static::modulo10($blocks['25-34']);
@@ -1393,7 +1686,7 @@ abstract class BoletoAbstract
         // Put part4 together.
         $part4  = $this->getFatorVencimento() . $this->getValorZeroFill();
 
-        // Now put everything together.
+        // // Now put everything together.
         return "$part1 $part2 $part3 $cd $part4";
     }
 
@@ -1424,10 +1717,10 @@ abstract class BoletoAbstract
 
         // Guarda inicial
         $retorno = '<div class="barcode">' .
-        '<div class="black thin"></div>' .
-        '<div class="white thin"></div>' .
-        '<div class="black thin"></div>' .
-        '<div class="white thin"></div>';
+            '<div class="black thin"></div>' .
+            '<div class="white thin"></div>' .
+            '<div class="black thin"></div>' .
+            '<div class="white thin"></div>';
 
         if (strlen($codigo) % 2 != 0) {
             $codigo = "0" . $codigo;
@@ -1462,23 +1755,22 @@ abstract class BoletoAbstract
 
         // Final
         return $retorno . '<div class="black large"></div>' .
-        '<div class="white thin"></div>' .
-        '<div class="black thin"></div>' .
-        '</div>';
+            '<div class="white thin"></div>' .
+            '<div class="black thin"></div>' .
+            '</div>';
     }
-    
+
     /**
-    * Retorna os dados do boleto em um array para ser usado externamente
-    *
-    * @return array
-    */
+     * Retorna os dados do boleto em um array para ser usado externamente
+     *
+     * @return array
+     */
     public function getData()
     {
-        if(empty($this->data))
-        {
-            $this->getOutput();  
-        }  
-        return $this->data;               
+        if (empty($this->data)) {
+            $this->getOutput();
+        }
+        return $this->data;
     }
 
     /**
@@ -1578,7 +1870,7 @@ abstract class BoletoAbstract
      */
     protected static function caracteresDireita($string, $num)
     {
-        return substr($string, strlen($string)-$num, $num);
+        return substr($string, strlen($string) - $num, $num);
     }
 
     /**
@@ -1596,18 +1888,19 @@ abstract class BoletoAbstract
         //  Separacao dos numeros.
         for ($i = strlen($num); $i > 0; $i--) {
             //  Pega cada numero isoladamente.
-            $numeros[$i] = substr($num,$i-1,1);
+            $numeros[$i] = substr($num, $i - 1, 1);
             //  Efetua multiplicacao do numero pelo (falor 10).
             $temp = $numeros[$i] * $fator;
-            $temp0=0;
-            foreach (preg_split('// ',$temp,-1,PREG_SPLIT_NO_EMPTY) as $v){ $temp0+=$v; }
+            $temp0 = 0;
+            foreach (preg_split('// ', $temp, -1, PREG_SPLIT_NO_EMPTY) as $v) {
+                $temp0 += $v;
+            }
             $parcial10[$i] = $temp0; // $numeros[$i] * $fator;
             //  Monta sequencia para soma dos digitos no (modulo 10).
             $numtotal10 += $parcial10[$i];
             if ($fator == 2) {
                 $fator = 1;
-            }
-            else {
+            } else {
                 // Intercala fator de multiplicacao (modulo 10).
                 $fator = 2;
             }
@@ -1630,7 +1923,7 @@ abstract class BoletoAbstract
      * @see Documentação em http://www.febraban.org.br/Acervo1.asp?id_texto=195&id_pagina=173&palavra=
      * @return array Retorna um array com as chaves 'digito' e 'resto'
      */
-    protected static function modulo11($num, $base=9)
+    protected static function modulo11($num, $base = 9)
     {
         $fator = 2;
 
@@ -1638,7 +1931,7 @@ abstract class BoletoAbstract
         // Separacao dos numeros.
         for ($i = strlen($num); $i > 0; $i--) {
             //  Pega cada numero isoladamente.
-            $numeros[$i] = substr($num,$i-1,1);
+            $numeros[$i] = substr($num, $i - 1, 1);
             //  Efetua multiplicacao do numero pelo falor.
             $parcial[$i] = $numeros[$i] * $fator;
             //  Soma dos digitos.
@@ -1654,7 +1947,7 @@ abstract class BoletoAbstract
             // Remainder.
             'resto'  => $soma % 11,
         );
-        if ($result['digito'] == 10){
+        if ($result['digito'] == 10) {
             $result['digito'] = 0;
         }
         return $result;

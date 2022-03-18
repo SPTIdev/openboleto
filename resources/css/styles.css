@@ -37,8 +37,11 @@ body{
     width: 666px;
 }
 
-.table-boleto td {
+.child-left {
     border-left: 1px solid #000;
+}
+
+.table-boleto td {
     border-top: 1px solid #000;
 }
 
@@ -48,6 +51,8 @@ body{
 
 .table-boleto .titulo {
     color: #000033;
+    /* font-size: small; */
+    font-weight: bold;
 }
 
 .linha-pontilhada {
@@ -59,8 +64,13 @@ body{
     margin-bottom: 10px;
 }
 
+.table-boleto .conteudo-thin {
+    font: thin 9px Arial;
+    height: 11.5px;
+}
+
 .table-boleto .conteudo {
-    font: bold 10px Arial;
+    font: bold 8.5px Arial;
     height: 11.5px;
 }
 

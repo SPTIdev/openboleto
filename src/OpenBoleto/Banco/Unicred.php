@@ -54,6 +54,18 @@ class Unicred extends BoletoAbstract
     protected $logoBanco = 'unicred.jpg';
 
     /**
+     * Localização do logotipo da ANS, referente ao diretório de imagens
+     * @var string
+     */
+    protected $logoAns = 'ans.jpg';
+
+    /**
+     * Localização do logotipo da empresa, referente ao diretório de imagens
+     * @var string
+     */
+    protected $logoEmpresa = 'logo-empresa.jpg';
+
+    /**
      * Define as carteiras disponíveis para este banco
      * @var array
      */
@@ -66,11 +78,12 @@ class Unicred extends BoletoAbstract
      */
     protected function gerarNossoNumero()
     {
-        $numero = self::zeroFill($this->getSequencial(), 10);
-        $dv = static::modulo11($numero);
-        $numero .= '-' . $dv['digito'];
+        return $this->sequencial;
+        // $numero = self::zeroFill($this->getSequencial(), 10);
+        // $dv = static::modulo11($numero);
+        // $numero .= $dv['digito'];
 
-        return $numero;
+        // return $numero;
     }
 
     /**
@@ -81,17 +94,16 @@ class Unicred extends BoletoAbstract
      */
     public function getCampoLivre()
     {
-        return self::zeroFill($this->getAgencia(), 4) . self::zeroFill($this->getConta(), 10) . self::zeroFill($this->getNossoNumero(false), 11);
+        return self::zeroFill($this->getAgencia(), 4) . self::zeroFill($this->getConta() . $this->getContaDv(), 10) . self::zeroFill($this->getNossoNumero(false), 11);
     }
 
-    /**
-     * Retorna o campo Agência/Cedente do boleto
-     *
-     * @return string
-     */
-    public function getAgenciaCodigoCedente()
-    {
-        return static::zeroFill($this->getAgencia(), 4) . ' / ' . static::zeroFill($this->getConta(), 10);
-    }
+    // /**
+    //  * Retorna o campo Agência/Cedente do boleto
+    //  *
+    //  * @return string
+    //  */
+    // public function getAgenciaCodigoCedente()
+    // {
+    //     return static::zeroFill($this->getAgencia(), 4) . ' / ' . static::zeroFill($this->getConta(), 10);
+    // }
 }
-

@@ -51,6 +51,11 @@ class Agente
     /**
      * @var string
      */
+    protected $idade;
+
+    /**
+     * @var string
+     */
     protected $cep;
 
     /**
@@ -73,14 +78,16 @@ class Agente
      *
      * @param string $nome
      * @param string $documento
+     * @param string $idade
      * @param string $endereco
      * @param string $cep
      * @param string $cidade
      * @param string $uf
      */
-    public function __construct($nome, $documento, $endereco = null, $cep = null, $cidade = null, $uf = null)
+    public function __construct($nome, $documento, $idade, $endereco = null, $cep = null, $cidade = null, $uf = null)
     {
         $this->setNome($nome);
+        $this->setIdade($idade);
         $this->setDocumento($documento);
         $endereco and $this->setEndereco($endereco);
         $cep and $this->setCep($cep);
@@ -146,6 +153,25 @@ class Agente
     public function getDocumento()
     {
         return $this->documento;
+    }
+    /**
+     * Define a idade
+     *
+     * @param string $idade
+     */
+    public function setIdade($idade)
+    {
+        $this->idade = $idade;
+    }
+
+    /**
+     * Retorna a idade
+     *
+     * @return string
+     */
+    public function getIdade()
+    {
+        return $this->idade;
     }
 
     /**
@@ -249,7 +275,7 @@ class Agente
      */
     public function getCepCidadeUf()
     {
-        $dados = array_filter(array($this->getCep(), $this->getCidade(), $this->getUf()));
+        $dados = array_filter(array($this->getCidade(), $this->getUf(), $this->getCep(),));
         return implode(' - ', $dados);
     }
 }

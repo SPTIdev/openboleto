@@ -1,12 +1,14 @@
 <?php
 
+date_default_timezone_set("America/Sao_Paulo");
+
 require '../autoloader.php';
 
 use OpenBoleto\Banco\Unicred;
 use OpenBoleto\Agente;
 
-$sacado = new Agente('Fernando Maia', '023.434.234-34', 'ABC 302 Bloco N', '72000-000', 'Brasília', 'DF');
-$cedente = new Agente('Empresa de cosméticos LTDA', '02.123.123/0001-11', 'CLS 403 Lj 23', '71000-000', 'Brasília', 'DF');
+$sacado = new Agente('RONALDO GONCALVES', '471.503.006-34', 'AV 21 DE NOVEMBRO, 829 VILA ISABEL', '37.505-185', 'ITAJUBA', 'MG');
+$cedente = new Agente('Unimed Itajubá Cooperativa de Trabalho Médico', ' 23.802.218/0001-65', 'Avenida Cesário Alvim, 382 Centro', '37.501-059', 'Itajubá', 'Minas Gerais');
 
 $boleto = new Unicred(array(
     // Parâmetros obrigatórios
@@ -18,7 +20,7 @@ $boleto = new Unicred(array(
     'carteira' => 51, // 11, 21, 31, 41 ou 51
     'conta' => 2259, // Até 10 dígitos
     'sequencial' => '13951', // Até 10 dígitos
-
+'teste' => 'jasdfiafsjas',
     // Parâmetros recomendáveis
     //'logoPath' => 'http://empresa.com.br/logo.jpg', // Logo da sua empresa
     // 'contaDv' => 2,
@@ -34,7 +36,7 @@ $boleto = new Unicred(array(
 
     // Parâmetros opcionais
     //'resourcePath' => '../resources',
-    //'moeda' => BancoDoBrasil::MOEDA_REAL,
+    // 'moeda' => Unicred::MOEDA_REAL,
     //'dataDocumento' => new DateTime(),
     //'dataProcessamento' => new DateTime(),
     //'contraApresentacao' => true,
@@ -43,7 +45,7 @@ $boleto = new Unicred(array(
     //'especieDoc' => 'ABC',
     //'numeroDocumento' => '123.456.789',
     //'usoBanco' => 'Uso banco',
-    //'layout' => 'layout.phtml',
+    // 'layout' => 'layout.phtml',
     //'logoPath' => 'http://boletophp.com.br/img/opensource-55x48-t.png',
     //'sacadorAvalista' => new Agente('Antônio da Silva', '02.123.123/0001-11'),
     //'descontosAbatimentos' => 123.12,
