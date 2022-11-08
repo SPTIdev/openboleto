@@ -131,6 +131,12 @@ abstract class BoletoAbstract
     protected $dataProcessamento;
 
     /**
+     * Vencimento original
+     * @var \DateTime
+     */
+    protected $vencimentoOriginal;
+
+    /**
      * Data de vencimento
      * @var \DateTime
      */
@@ -234,32 +240,76 @@ abstract class BoletoAbstract
     protected $sacado;
 
     /**
-     * Entidade faturamento1 (Informações linha 1 sobre dados do faturamento)
-     * @var AgenteFaturamento
+     * Entidade classeFaturamento
+     * @var array
      */
-    protected $faturamento1;
-    /**
-     * Entidade faturamento2 (Informações linha 2 sobre dados do faturamento)
-     * @var AgenteFaturamento
-     */
-    protected $faturamento2;
-    /**
-     * Entidade faturamento3 (Informações linha 3 sobre dados do faturamento)
-     * @var AgenteFaturamento
-     */
-    protected $faturamento3;
+    protected $classeFaturamento;
 
     /**
-     * Entidade prePagamento1 (Informações linha 1 sobre o valor do boleto)
-     * @var AgentePrePagamento
+     * Entidade qteFaturamento
+     * @var array
      */
-    protected $prePagamento1;
+    protected $qteFaturamento;
 
     /**
-     * Entidade prePagamento2 (Informações da linha 2 sobre o valor do boleto)
-     * @var AgentePrePagamento
+     * Entidade unitarioFaturamento
+     * @var array
      */
-    protected $prePagamento2;
+    protected $unitarioFaturamento;
+
+    /**
+     * Entidade totalFaturamento
+     * @var array
+     */
+    protected $totalFaturamento;
+
+    /**
+     * Entidade nomePrePagamento
+     * @var array
+     */
+    protected $nomePrePagamento;
+
+    /**
+     * Entidade idadePrePagamento
+     * @var array
+     */
+    protected $idadePrePagamento;
+
+    /**
+     * Entidade inicioVigenciaPrePagamento
+     * @var array
+     */
+    protected $inicioVigenciaPrePagamento;
+
+    /**
+     * Entidade valorAnteriorPrePagamento
+     * @var array
+     */
+    protected $valorAnteriorPrePagamento;
+
+    /**
+     * Entidade valorMensalidadePrePagamento
+     * @var array
+     */
+    protected $valorMensalidadePrePagamento;
+
+    /**
+     * Entidade registroAnsPrePagamento
+     * @var array
+     */
+    protected $registroAnsPrePagamento;
+
+    /**
+     * Entidade proxReajustePrePagamento
+     * @var array
+     */
+    protected $proxReajustePrePagamento;
+
+    /**
+     * Entidade observacaoPrePagamento
+     * @var array
+     */
+    protected $observacaoPrePagamento;
 
     /**
      * Entidade sacador avalista
@@ -361,6 +411,11 @@ abstract class BoletoAbstract
         // Marca a data de processamento para hoje, caso não especificada
         if (!$this->getDataProcessamento()) {
             $this->setDataProcessamento(new DateTime());
+        }
+
+        // Marca a data de processamento para hoje, caso não especificada
+        if (!$this->getVencimentoOriginal()) {
+            $this->setVencimentoOriginal(new DateTime());
         }
 
         // Marca a data de vencimento para daqui a 5 dias, caso não especificada
@@ -530,6 +585,28 @@ abstract class BoletoAbstract
     public function getContaDv()
     {
         return $this->contaDv;
+    }
+
+    /**
+     * Define o vencimento original
+     *
+     * @param \DateTime $vencimentoOriginal
+     * @return BoletoAbstract
+     */
+    public function setVencimentoOriginal(DateTime $vencimentoOriginal)
+    {
+        $this->vencimentoOriginal = $vencimentoOriginal;
+        return $this;
+    }
+
+    /**
+     * Retorna vencimento original
+     *
+     * @return \DateTime
+     */
+    public function getVencimentoOriginal()
+    {
+        return $this->vencimentoOriginal;
     }
 
     /**
@@ -876,113 +953,374 @@ abstract class BoletoAbstract
     }
 
     /**
-     * Define o objeto do faturamento1
+     * Define o objeto do qteFaturamento
      *
-     * @param AgenteFaturamento $faturamento1
+     * @param array $classeFaturamento
      * @return BoletoAbstract
      */
-    public function setFaturamento1(AgenteFaturamento $faturamento1)
+    public function setClasseFaturamento(array $classeFaturamento)
     {
-        $this->faturamento1 = $faturamento1;
+        $this->classeFaturamento = $classeFaturamento;
         return $this;
     }
 
     /**
-     * Retorna o objeto do faturamento1
+     * Retorna o objeto do classeFaturamento
      *
-     * @return AgenteFaturamento
+     * @return array
      */
-    public function getFaturamento1()
+    public function getClasseFaturamento()
     {
-        return $this->faturamento1;
+        return $this->classeFaturamento;
     }
-
     /**
-     * Define o objeto do faturamento2
+     * Define o objeto do qteFaturamento
      *
-     * @param AgenteFaturamento $faturamento2
+     * @param array $qteFaturamento
      * @return BoletoAbstract
      */
-    public function setFaturamento2(AgenteFaturamento $faturamento2)
+    public function setQteFaturamento(array $qteFaturamento)
     {
-        $this->faturamento2 = $faturamento2;
+        $this->qteFaturamento = $qteFaturamento;
         return $this;
     }
 
     /**
-     * Retorna o objeto do faturamento2
+     * Retorna o objeto do qteFaturamento
      *
-     * @return AgenteFaturamento
+     * @return array
      */
-    public function getFaturamento2()
+    public function getQteFaturamento()
     {
-        return $this->faturamento2;
+        return $this->qteFaturamento;
     }
-
     /**
-     * Define o objeto do faturamento3
+     * Define o objeto do unitarioFaturamento
      *
-     * @param AgenteFaturamento $faturamento3
+     * @param array $unitarioFaturamento
      * @return BoletoAbstract
      */
-    public function setFaturamento3(AgenteFaturamento $faturamento3)
+    public function setUnitarioFaturamento(array $unitarioFaturamento)
     {
-        $this->faturamento3 = $faturamento3;
+        $this->unitarioFaturamento = $unitarioFaturamento;
         return $this;
     }
 
     /**
-     * Retorna o objeto do faturamento3
+     * Retorna o objeto do classeFaturamento
      *
-     * @return AgenteFaturamento
+     * @return array
      */
-    public function getFaturamento3()
+    public function getUnitarioFaturamento()
     {
-        return $this->faturamento3;
+        return $this->unitarioFaturamento;
     }
-
     /**
-     * Define o objeto do prePagamento1
+     * Define o objeto do totalFaturamento
      *
-     * @param AgentePrePagamento $prePagamento1
+     * @param array $totalFaturamento
      * @return BoletoAbstract
      */
-    public function setPrePagamento1(AgentePrePagamento $prePagamento1)
+    public function setTotalFaturamento(array $totalFaturamento)
     {
-        $this->prePagamento1 = $prePagamento1;
+        $this->totalFaturamento = $totalFaturamento;
         return $this;
     }
 
     /**
-     * Retorna o objeto do prePagamento1
+     * Retorna o objeto do totalFaturamento
      *
-     * @return AgentePrePagamento
+     * @return array
      */
-    public function getPrePagamento1()
+    public function getTotalFaturamento()
     {
-        return $this->prePagamento1;
+        return $this->totalFaturamento;
     }
 
     /**
-     * Define o objeto do prePagamento2
+     * Retorna o objeto do nomePrePagamento
      *
-     * @param AgentePrePagamento $prePagamento2
+     * @return array
+     */
+    public function getNomePrePagamento()
+    {
+        return $this->nomePrePagamento;
+    }
+
+    /**
+     * Define o objeto do nomePrePagamento
+     *
+     * @param array $nomePrePagamento
      * @return BoletoAbstract
      */
-    public function setPrePagamento2(AgentePrePagamento $prePagamento2)
+    public function setNomePrePagamento(array $nomePrePagamento)
     {
-        $this->prePagamento2 = $prePagamento2;
+        $this->nomePrePagamento = $nomePrePagamento;
         return $this;
     }
 
     /**
-     * Retorna o objeto do prePagamento2
+     * Retorna o objeto do idadePrePagamento
      *
-     * @return AgentePrePagamento
+     * @return array
      */
-    public function getPrePagamento2()
+    public function getIdadePrePagamento()
     {
-        return $this->prePagamento2;
+        return $this->idadePrePagamento;
+    }
+
+    /**
+     * Define o objeto do idadePrePagamento
+     *
+     * @param array $idadePrePagamento
+     * @return BoletoAbstract
+     */
+    public function setIdadePrePagamento(array $idadePrePagamento)
+    {
+        $this->idadePrePagamento = $idadePrePagamento;
+        return $this;
+    }
+
+    /**
+     * Retorna o objeto do inicioVigenciaPrePagamento
+     *
+     * @return array
+     */
+    public function getInicioVigenciaPrePagamento()
+    {
+        return $this->inicioVigenciaPrePagamento;
+    }
+
+    /**
+     * Define o objeto do inicioVigenciaPrePagamento
+     *
+     * @param array $inicioVigenciaPrePagamento
+     * @return BoletoAbstract
+     */
+    public function setInicioVigenciaPrePagamento(array $inicioVigenciaPrePagamento)
+    {
+        $this->inicioVigenciaPrePagamento = $inicioVigenciaPrePagamento;
+        return $this;
+    }
+
+    /**
+     * Retorna o objeto do valorAnteriorPrePagamento
+     *
+     * @return array
+     */
+    public function getValorAnteriorPrePagamento()
+    {
+        return $this->valorAnteriorPrePagamento;
+    }
+
+    /**
+     * Define o objeto do valorAnteriorPrePagamento
+     *
+     * @param array $valorAnteriorPrePagamento
+     * @return BoletoAbstract
+     */
+    public function setValorAnteriorPrePagamento(array $valorAnteriorPrePagamento)
+    {
+        $this->valorAnteriorPrePagamento = $valorAnteriorPrePagamento;
+        return $this;
+    }
+
+    /**
+     * Retorna o objeto do valorMensalidadePrePagamento
+     *
+     * @return array
+     */
+    public function getValorMensalidadePrePagamento()
+    {
+        return $this->valorMensalidadePrePagamento;
+    }
+
+    /**
+     * Define o objeto do valorMensalidadePrePagamento
+     *
+     * @param array $valorMensalidadePrePagamento
+     * @return BoletoAbstract
+     */
+    public function setValorMensalidadePrePagamento(array $valorMensalidadePrePagamento)
+    {
+        $this->valorMensalidadePrePagamento = $valorMensalidadePrePagamento;
+        return $this;
+    }
+
+    /**
+     * Retorna o objeto do registroAnsPrePagamento
+     *
+     * @return array
+     */
+    public function getRegistroAnsPrePagamento()
+    {
+        return $this->registroAnsPrePagamento;
+    }
+
+    /**
+     * Define o objeto do registroAnsPrePagamento
+     *
+     * @param array $registroAnsPrePagamento
+     * @return BoletoAbstract
+     */
+    public function setRegistroAnsPrePagamento(array $registroAnsPrePagamento)
+    {
+        $this->registroAnsPrePagamento = $registroAnsPrePagamento;
+        return $this;
+    }
+
+    /**
+     * Retorna o objeto do proxReajustePrePagamento
+     *
+     * @return array
+     */
+    public function getProxReajustePrePagamento()
+    {
+        return $this->proxReajustePrePagamento;
+    }
+
+    /**
+     * Define o objeto do proxReajustePrePagamento
+     *
+     * @param array $proxReajustePrePagamento
+     * @return BoletoAbstract
+     */
+    public function setProxReajustePrePagamento(array $proxReajustePrePagamento)
+    {
+        $this->proxReajustePrePagamento = $proxReajustePrePagamento;
+        return $this;
+    }
+
+    /**
+     * Retorna o objeto do observacaoPrePagamento
+     *
+     * @return array
+     */
+    public function getObservacaoPrePagamento()
+    {
+        return $this->observacaoPrePagamento;
+    }
+
+    /**
+     * Define o objeto do observacaoPrePagamento
+     *
+     * @param array $observacaoPrePagamento
+     * @return BoletoAbstract
+     */
+    public function setObservacaoPrePagamento(array $observacaoPrePagamento)
+    {
+        $this->observacaoPrePagamento = $observacaoPrePagamento;
+        return $this;
+    }
+
+    /**
+     * Retorna o objeto do beneficiarioUtilizacaoPos
+     *
+     * @return array
+     */
+    public function getBeneficiarioUtilizacaoPos()
+    {
+        return $this->beneficiarioUtilizacaoPos;
+    }
+
+    /**
+     * Define o objeto do beneficiarioUtilizacaoPos
+     *
+     * @param array $beneficiarioUtilizacaoPos
+     * @return BoletoAbstract
+     */
+    public function setBeneficiarioUtilizacaoPos(array $beneficiarioUtilizacaoPos)
+    {
+        $this->beneficiarioUtilizacaoPos = $beneficiarioUtilizacaoPos;
+        return $this;
+    }
+
+    /**
+     * Retorna o objeto do prestadorUtilizacaoPos
+     *
+     * @return array
+     */
+    public function getPrestadorUtilizacaoPos()
+    {
+        return $this->prestadorUtilizacaoPos;
+    }
+
+    /**
+     * Define o objeto do prestadorUtilizacaoPos
+     *
+     * @param array $prestadorUtilizacaoPos
+     * @return BoletoAbstract
+     */
+    public function setPrestadorUtilizacaoPos(array $prestadorUtilizacaoPos)
+    {
+        $this->prestadorUtilizacaoPos = $prestadorUtilizacaoPos;
+        return $this;
+    }
+
+    /**
+     * Retorna o objeto do grupoUtilizacaoPos
+     *
+     * @return array
+     */
+    public function getGrupoUtilizacaoPos()
+    {
+        return $this->grupoUtilizacaoPos;
+    }
+
+    /**
+     * Define o objeto do grupoUtilizacaoPos
+     *
+     * @param array $grupoUtilizacaoPos
+     * @return BoletoAbstract
+     */
+    public function setGrupoUtilizacaoPos(array $grupoUtilizacaoPos)
+    {
+        $this->grupoUtilizacaoPos = $grupoUtilizacaoPos;
+        return $this;
+    }
+
+    /**
+     * Retorna o objeto do dataUtilizacaoPos
+     *
+     * @return array
+     */
+    public function getDataUtilizacaoPos()
+    {
+        return $this->dataUtilizacaoPos;
+    }
+
+    /**
+     * Define o objeto do dataUtilizacaoPos
+     *
+     * @param array $dataUtilizacaoPos
+     * @return BoletoAbstract
+     */
+    public function setDataUtilizacaoPos(array $dataUtilizacaoPos)
+    {
+        $this->dataUtilizacaoPos = $dataUtilizacaoPos;
+        return $this;
+    }
+
+    /**
+     * Retorna o objeto do totalUtilizacaoPos
+     *
+     * @return array
+     */
+    public function getTotalUtilizacaoPos()
+    {
+        return $this->totalUtilizacaoPos;
+    }
+
+    /**
+     * Define o objeto do totalUtilizacaoPos
+     *
+     * @param array $totalUtilizacaoPos
+     * @return BoletoAbstract
+     */
+    public function setTotalUtilizacaoPos(array $totalUtilizacaoPos)
+    {
+        $this->totalUtilizacaoPos = $totalUtilizacaoPos;
+        return $this;
     }
 
     /**
@@ -1503,6 +1841,7 @@ abstract class BoletoAbstract
             'codigo_banco_com_dv' => $this->getCodigoBancoComDv(),
             'especie' => static::$especie[$this->getMoeda()],
             'quantidade' => $this->getQuantidade(),
+            'vencimento_original' => $this->getVencimentoOriginal()->format('d/m/Y'),
             'data_vencimento' => $this->getContraApresentacao() ? 'Contra Apresenta&ccedil;&atilde;o' : $this->getDataVencimento()->format('d/m/Y'),
             'data_processamento'  => $this->getDataProcessamento()->format('d/m/Y'),
             'data_documento' => $this->getDataDocumento()->format('d/m/Y'),
@@ -1515,41 +1854,41 @@ abstract class BoletoAbstract
             'valor_cobrado' => static::formataDinheiro($this->getValorCobrado()),
             'valor_unitario' => static::formataDinheiro($this->getValorUnitario()),
             'sacador_avalista' => $this->getSacadorAvalista() ? $this->getSacadorAvalista()->getNomeDocumento() : null,
+
             /**
              * Dados do Faturamento
              */
-            'classe_faturamento1' => $this->getFaturamento1()->getClasse(),
-            'classe_faturamento2' => $this->getFaturamento2()->getClasse(),
-            'classe_faturamento3' => $this->getFaturamento3()->getClasse(),
-            'qte_faturamento1' => $this->getFaturamento1()->getQte(),
-            'qte_faturamento2' => $this->getFaturamento2()->getQte(),
-            'qte_faturamento3' => $this->getFaturamento3()->getQte(),
-            'unitario_faturamento1' => $this->getFaturamento1()->getUnitario(),
-            'unitario_faturamento2' => $this->getFaturamento2()->getUnitario(),
-            'unitario_faturamento3' => $this->getFaturamento3()->getUnitario(),
-            'total_faturamento1' => $this->getFaturamento1()->getTotal(),
-            'total_faturamento2' => $this->getFaturamento2()->getTotal(),
-            'total_faturamento3' => $this->getFaturamento3()->getTotal(),
+            'classe_faturamento' => (array) $this->getClasseFaturamento() + array(null, null, null, null, null, null, null, null, null, null), // Max: 10 linhas
+            'qte_faturamento' => (array) $this->getQteFaturamento() + array(null, null, null, null, null, null, null, null, null, null),
+            'unitario_faturamento' => (array) $this->getUnitarioFaturamento() + array(null, null, null, null, null, null, null, null, null, null),
+            'total_faturamento' => (array) $this->getTotalFaturamento() + array(null, null, null, null, null, null, null, null, null, null),
+
             /**
              * Mensalidade - Pré Pagamento
              */
-            'nome_pre_pagamento1' => $this->getPrePagamento1()->getNome(),
-            'nome_pre_pagamento2' => $this->getPrePagamento2()->getNome(),
-            'idade_pre_pagamento1' => $this->getPrePagamento1()->getIdade(),
-            'idade_pre_pagamento2' => $this->getPrePagamento2()->getIdade(),
-            'inicio_vigencia_pre_pagamento1' => $this->getPrePagamento1()->getInicioVigencia(),
-            'inicio_vigencia_pre_pagamento2' => $this->getPrePagamento2()->getInicioVigencia(),
-            'valor_anterior_pre_pagamento1' => $this->getPrePagamento1()->getValorAnterior(),
-            'valor_anterior_pre_pagamento2' => $this->getPrePagamento2()->getValorAnterior(),
-            'valor_mensalidade_pre_pagamento1' => $this->getPrePagamento1()->getValorMensalidade(),
-            'valor_mensalidade_pre_pagamento2' => $this->getPrePagamento2()->getValorMensalidade(),
-            'registro_ans_pre_pagamento1' => $this->getPrePagamento1()->getRegistroAns(),
-            'registro_ans_pre_pagamento2' => $this->getPrePagamento2()->getRegistroAns(),
-            'prox_reajuste_pre_pagamento1' => $this->getPrePagamento1()->getProxReajuste(),
-            'prox_reajuste_pre_pagamento2' => $this->getPrePagamento2()->getProxReajuste(),
-            'observacao_pre_pagamento1' => $this->getPrePagamento1()->getObservacao(),
-            'observacao_pre_pagamento2' => $this->getPrePagamento2()->getObservacao(),
-            //
+            'nome_pre_pagamento' => $this->getNomePrePagamento() + array(null, null, null, null, null, null, null, null, null), // Max: 9 linhas,
+            'idade_pre_pagamento' => $this->getIdadePrePagamento() + array(null, null, null, null, null, null, null, null, null),
+            'inicio_vigencia_pre_pagamento' => $this->getInicioVigenciaPrePagamento() + array(null, null, null, null, null, null, null, null, null),
+            'valor_anterior_pre_pagamento' => $this->getValorAnteriorPrePagamento() + array(null, null, null, null, null, null, null, null, null),
+            ///Merge no valor total ao valor da mensalidade para ser mosrado como somatório
+            ///Utiliza array com 10 de tamanho, diferente dos outros
+            'valor_mensalidade_pre_pagamento' => array_merge($this->getValorMensalidadePrePagamento(), array(static::formataDinheiro($this->getValor()))) + array(null, null, null, null, null, null, null, null, null, null), // Max: 10 linhas
+            'registro_ans_pre_pagamento' => $this->getRegistroAnsPrePagamento() + array(null, null, null, null, null, null, null, null, null),
+            'prox_reajuste_pre_pagamento' => $this->getProxReajustePrePagamento() + array(null, null, null, null, null, null, null, null, null),
+            'observacao_pre_pagamento' => $this->getObservacaoPrePagamento() + array(null, null, null, null, null, null, null, null, null),
+
+            /**
+             * Utilização Pós
+             */
+            'beneficiario_utilizacao_pos' => $this->getBeneficiarioUtilizacaoPos() + array(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null), // Max: 17 linhas
+            'prestador_utilizacao_pos' => $this->getPrestadorUtilizacaoPos() + array(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null),
+            'grupo_utilizacao_pos' => $this->getGrupoUtilizacaoPos() + array(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null),
+            'data_utilizacao_pos' => $this->getDataUtilizacaoPos() + array(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null),
+            'total_utilizacao_pos' => $this->getTotalUtilizacaoPos() + array(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null),
+
+            /**
+             * Demais campos
+             */
             'sacado' => $this->getSacado()->getNome(),
             'sacado_documento' => $this->getSacado()->getDocumento(),
             'sacado_idade' => $this->getSacado()->getIdade(),
@@ -1793,7 +2132,7 @@ abstract class BoletoAbstract
     {
         if (!$this->getContraApresentacao()) {
             $date = new DateTime('1997-10-07');
-            return $date->diff($this->getDataVencimento())->days;
+            return $date->diff($this->getVencimentoOriginal())->days;
         } else {
             return '0000';
         }
